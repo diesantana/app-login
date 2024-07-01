@@ -8,7 +8,7 @@
     </div>
   </div>
   <!-- Formulário de login -->
-  <form action="#!">
+  <form [formGroup]="loginForm">
     <div class="row gy-3 gy-md-4 overflow-hidden">
       <!-- Campo para o email -->
       <div class="col-12">
@@ -21,8 +21,24 @@
           name="email"
           id="email"
           placeholder="name@example.com"
-          required
+          formControlName="email"
+          [class.is-invalid]="
+            loginForm.get('email')?.errors && loginForm.get('email')?.touched
+          "
         />
+        <!-- Mensagem de erro -->
+        <div
+          *ngIf="loginForm.get('email')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Email fild is required
+        </div>
+        <div
+          *ngIf="loginForm.get('email')?.hasError('email')"
+          class="invalid-feedback"
+        >
+          Enter a valid email address
+        </div>
       </div>
       <!-- Campo para a senha -->
       <div class="col-12">
@@ -35,8 +51,25 @@
           name="password"
           id="password"
           value=""
-          required
+          formControlName="password"
+          [class.is-invalid]="
+            loginForm.get('password')?.errors &&
+            loginForm.get('password')?.touched
+          "
         />
+        <!-- Mensagem de erro -->
+        <div
+          *ngIf="loginForm.get('password')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Password field is required
+        </div>
+        <div
+          *ngIf="loginForm.get('password')?.hasError('minlength')"
+          class="invalid-feedback"
+        >
+          The password field must have at least 6 digits
+        </div>
       </div>
       <!-- Checkbox para lembrar o login -->
       <div class="col-12">
@@ -56,7 +89,9 @@
       <!-- Botão de envio do formulário -->
       <div class="col-12">
         <div class="d-grid">
-          <button class="btn btn-submit" type="submit">Log in now</button>
+          <button [disabled]="loginForm.invalid" class="btn btn-submit" (click)="submitForm()" type="submit">
+            Log in now
+          </button>
         </div>
       </div>
     </div>
@@ -68,7 +103,9 @@
       <div
         class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end"
       >
-        <a [routerLink]="['register']" class="link-secondary text-decoration-none"
+        <a
+          [routerLink]="['register']"
+          class="link-secondary text-decoration-none"
           >Create new account</a
         >
         <a href="#!" class="link-secondary text-decoration-none"
@@ -77,6 +114,4 @@
       </div>
     </div>
   </div>
-
-
 </div>
