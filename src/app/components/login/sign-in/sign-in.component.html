@@ -23,7 +23,8 @@
           placeholder="name@example.com"
           formControlName="email"
           [class.is-invalid]="
-            loginForm.get('email')?.errors && loginForm.get('email')?.touched
+            loginForm.get('email')?.errors && (loginForm.get('email')?.touched ||
+            loginForm.get('email')?.dirty)
           "
         />
         <!-- Mensagem de erro -->
@@ -54,7 +55,7 @@
           formControlName="password"
           [class.is-invalid]="
             loginForm.get('password')?.errors &&
-            loginForm.get('password')?.touched
+            (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)
           "
         />
         <!-- Mensagem de erro -->

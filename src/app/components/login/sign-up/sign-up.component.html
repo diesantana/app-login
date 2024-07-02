@@ -8,21 +8,42 @@
     </div>
   </div>
   <!-- Formulário de login -->
-  <form action="#!">
+  <form [formGroup]="registerForm">
     <div class="row gy-3 gy-md-4 overflow-hidden">
       <!-- Campo para o nome -->
       <div class="col-12">
-        <label for="firstName" class="form-label"
+        <label for="fullName" class="form-label"
           >Full Name<span class="text-danger">*</span></label
         >
         <input
-          type="email"
+          type="text"
           class="form-control"
-          name="firstName"
-          id="firstName"
-          placeholder="First Name"
-          required
+          name="fullName"
+          id="fullName"
+          placeholder="Full Name"
+          formControlName="name"
+          [class.is-invalid]="
+            registerForm.get('name')?.errors &&
+            (registerForm.get('name')?.touched ||
+              registerForm.get('name')?.dirty)
+          "
         />
+        <!-- Mensagem de erro -->
+        <div
+          *ngIf="registerForm.get('name')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Name fild is required
+        </div>
+        <div
+          *ngIf="
+            registerForm.get('name')?.hasError('minlength') ||
+            registerForm.get('name')?.hasError('maxlength')
+          "
+          class="invalid-feedback"
+        >
+          Name shold be between 3 and 100 characters
+        </div>
       </div>
 
       <!-- Campo para o email -->
@@ -36,49 +57,117 @@
           name="email"
           id="email"
           placeholder="name@example.com"
-          required
+          formControlName="email"
+          [class.is-invalid]="
+            registerForm.get('email')?.errors &&
+            (registerForm.get('email')?.touched ||
+              registerForm.get('email')?.dirty)
+          "
         />
+        <!-- Mensagem de erro -->
+        <div
+          *ngIf="registerForm.get('email')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Email fild is required
+        </div>
+        <div
+          *ngIf="registerForm.get('email')?.hasError('email')"
+          class="invalid-feedback"
+        >
+          Enter a valid email address
+        </div>
       </div>
+
       <!-- Campo para a senha -->
       <div class="col-12">
-        <label for="password" class="form-label"
-          >Password <span class="text-danger">*</span></label
-        >
+        <label for="password" class="form-label">
+          Password <span class="text-danger">*</span>
+        </label>
         <input
           type="password"
           class="form-control"
-          name="password"
           id="password"
-          value=""
-          required
+          formControlName="password"
+          [class.is-invalid]="
+            registerForm.get('password')?.errors &&
+            (registerForm.get('password')?.touched ||
+              registerForm.get('password')?.dirty)
+          "
         />
+        <!-- Mensagens de erro -->
+        <div
+          *ngIf="registerForm.get('password')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Password field is required
+        </div>
+        <div
+          *ngIf="registerForm.get('password')?.hasError('minlength')"
+          class="invalid-feedback"
+        >
+          The password field must have at least 6 digits
+        </div>
       </div>
+
       <!-- Campo para repetir a senha -->
       <div class="col-12">
-        <label for="confirm-password" class="form-label"
-          >Confirm Password <span class="text-danger">*</span></label
-        >
+        <label for="confirm-password" class="form-label">
+          Confirm Password <span class="text-danger">*</span>
+        </label>
         <input
           type="password"
           class="form-control"
-          name="confirm-password"
           id="confirm-password"
-          value=""
-          required
+          formControlName="confirmPassword"
+          [class.is-invalid]="
+          (registerForm.get('confirmPassword')?.invalid &&
+            (registerForm.get('confirmPassword')?.touched ||
+            registerForm.get('confirmPassword')?.dirty))
+          ||
+          (registerForm.errors?.['passwordMismatch'] &&
+            (registerForm.get('confirmPassword')?.touched ||
+            registerForm.get('confirmPassword')?.dirty))
+        "
         />
+        <!-- Mensagens de erro -->
+        <div
+          *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
+          class="invalid-feedback"
+        >
+          Confirm password field is required
+        </div>
+        <div
+          *ngIf="registerForm.get('confirmPassword')?.hasError('minlength')"
+          class="invalid-feedback"
+        >
+          The confirm password field must have at least 6 digits
+        </div>
+        <!-- Verificação se o formulário tem erro de validação de correspondência de senha -->
+        <div
+          *ngIf="
+            registerForm.hasError('passwordMismatch') &&
+            (registerForm.get('confirmPassword')?.touched ||
+              registerForm.get('confirmPassword')?.dirty)
+          "
+          class="invalid-feedback"
+        >
+          Password and password confirmation are not the same
+        </div>
       </div>
-      <!-- Checkbox para lembrar o login -->
+
+      <!-- Checkbox para aceite dos termos -->
       <div class="col-12">
         <div class="form-check">
           <input
             class="form-check-input"
             type="checkbox"
             value=""
-            name="iAgree"
-            id="iAgree"
-            required
+            name="acceptTerms"
+            id="acceptTerms"
+            formControlName="acceptTerms"
           />
-          <label class="form-check-label text-secondary" for="iAgree">
+          <label class="form-check-label text-secondary" for="acceptTerms">
             I agree to the
             <a href="#!" class="link-primary text-decoration-none"
               >terms and conditions</a
@@ -86,10 +175,18 @@
           </label>
         </div>
       </div>
+
       <!-- Botão de envio do formulário -->
       <div class="col-12">
         <div class="d-grid">
-          <button class="btn btn-submit" type="submit">Sign up</button>
+          <button
+            [disabled]="registerForm.invalid"
+            (click)="submitForm()"
+            class="btn btn-submit"
+            type="submit"
+          >
+            Sign up
+          </button>
         </div>
       </div>
     </div>
@@ -100,7 +197,9 @@
       <hr class="mt-5 mb-4 border-secondary-subtle" />
       <p class="m-0 text-secondary text-center">
         Already have an account?
-        <a [routerLink]="['login']" class="link-primary text-decoration-none">Sign in</a>
+        <a [routerLink]="['login']" class="link-primary text-decoration-none"
+          >Sign in</a
+        >
       </p>
     </div>
   </div>

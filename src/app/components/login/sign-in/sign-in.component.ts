@@ -6,16 +6,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent {
   loginForm: FormGroup = new FormGroup({});
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit(): void {
-    this.initializeForm();
+    this.initializeForm(); // Inicializa o formulário ao iniciar o componente
   }
 
   initializeForm(): void {
+    // Cria o FormGroup com os campos e validadores necessários
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -30,5 +32,4 @@ export class SignInComponent implements OnInit {
       console.log("Dados inválidos");
     }
   }
-
 }
