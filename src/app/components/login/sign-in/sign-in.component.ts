@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,7 +11,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class SignInComponent {
   loginForm: FormGroup = new FormGroup({});
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private toastService: ToastrService,
+    private loginService: LoginService
+  ) {
   }
 
   ngOnInit(): void {
@@ -26,10 +32,23 @@ export class SignInComponent {
 
   submitForm(): void {
     if(this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      // Lógica de login aqui
+      this.loginService.login(
+        this.loginForm.value.email, this.loginForm.value.password
+      ).subscribe({
+        next: response => {
+          this.toastService.success("Login feito com sucesso!");
+          // **************************************************************************************
+          // Lógica para redireciona para a página home
+        },
+        error: err => {
+          this.toastService.error("Erro insesperado, tente novamente mais tarde.");
+          console.log(err);
+        }
+      });
+
       this.loginForm.reset();
-    } else {
-      console.log("Dados inválidos");
     }
   }
+
 }
