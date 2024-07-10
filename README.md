@@ -43,7 +43,7 @@ O objetivo do projeto é reforçar o meu aprendizado com Spring Security e a int
 1. Clone o repositório:
     ```sh
     git clone https://github.com/diesantana/login-auth-api.git
-    cd login-auth-api
+    cd login-auth-api/backend
     ```
 
 2. Compile e empacote o projeto usando Maven:
@@ -62,7 +62,8 @@ A aplicação estará disponível em `http://localhost:8080`.
 
 **Requisitos do Sistema**
 - [Node.js 14.15.0 ou superior](https://nodejs.org/).
-- **Angular CLI 17.3.8:** Certifique-se de ter o Angular CLI instalado globalmente. Você pode instalá-lo executando:
+- **Angular CLI 17.3.8:** Certifique-se de ter o Angular CLI instalado globalmente.   
+  Você pode instalá-lo executando:
     ```sh
     npm install -g @angular/cli@17.3.8
     ```
@@ -71,7 +72,7 @@ A aplicação estará disponível em `http://localhost:8080`.
 1. Clone o repositório:
     ```sh
     git clone https://github.com/diesantana/login-app.git
-    cd login-app
+    cd login-app/frontend
     ```
 
 2. Instale as dependências:
