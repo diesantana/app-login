@@ -42,8 +42,8 @@ O objetivo do projeto é reforçar o meu aprendizado com Spring Security e a int
 **Configuração**
 1. Clone o repositório:
     ```sh
-    git clone https://github.com/diesantana/login-auth-api.git
-    cd login-auth-api/backend
+    git clone git@github.com:diesantana/app-login.git
+    cd app-login/backend
     ```
 
 2. Compile e empacote o projeto usando Maven:
@@ -71,8 +71,8 @@ A aplicação estará disponível em `http://localhost:8080`.
 **Configuração**
 1. Clone o repositório:
     ```sh
-    git clone https://github.com/diesantana/login-app.git
-    cd login-app/frontend
+    git clone git@github.com:diesantana/app-login.git
+    cd app-login/frontend
     ```
 
 2. Instale as dependências:
