@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { LoginService } from '../../../services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,7 +15,8 @@ export class SignInComponent {
   constructor(
     private formBuilder: FormBuilder,
     private toastService: ToastrService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) {
   }
 
@@ -32,18 +34,15 @@ export class SignInComponent {
 
   submitForm(): void {
     if(this.loginForm.valid) {
-      // Lógica de login aqui
       this.loginService.login(
         this.loginForm.value.email, this.loginForm.value.password
       ).subscribe({
         next: response => {
           this.toastService.success("Login feito com sucesso!");
-          // **************************************************************************************
-          // Lógica para redireciona para a página home
+          this.router.navigate(['/home']);
         },
         error: err => {
           this.toastService.error("Erro insesperado, tente novamente mais tarde.");
-          console.log(err);
         }
       });
 
