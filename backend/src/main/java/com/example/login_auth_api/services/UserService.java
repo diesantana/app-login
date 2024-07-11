@@ -7,8 +7,6 @@ import com.example.login_auth_api.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserService {
     @Autowired
@@ -22,7 +20,6 @@ public class UserService {
 
     // Converte entidade para DTO
     private UserDTO convertEntityToDTO(User user) {
-        UserDTO dto = new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getPassword());
-        return dto;
+        return new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getPassword());
     }
 }
