@@ -1,0 +1,28 @@
+package com.example.login_auth_api.services;
+
+import com.example.login_auth_api.domain.User;
+import com.example.login_auth_api.dtos.UserDTO;
+import com.example.login_auth_api.repositories.UserRepository;
+import com.example.login_auth_api.services.exceptions.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+    
+    public UserDTO findByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return convertEntityToDTO(user);
+    }
+
+    // Converte entidade para DTO
+    private UserDTO convertEntityToDTO(User user) {
+        UserDTO dto = new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getPassword());
+        return dto;
+    }
+}
