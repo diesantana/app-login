@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.login_auth_api.domain.User;
+import com.example.login_auth_api.exceptions.TokenGenerationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +33,7 @@ public class TokenService {
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException e) {
-            // O recomendado é lançar um exceção personalizada
-            throw new RuntimeException("Error while authentication");
+            throw new TokenGenerationException("Error while generating token", e);
         }
     }
 
