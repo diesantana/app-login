@@ -89,7 +89,6 @@ A aplicação estará disponível em `http://localhost:4200`.
 
 **Observações**
 - Certifique-se de que o back-end esteja em execução antes de testar a integração com o front-end.
-- Você pode modificar as configurações de porta ou outras configurações conforme necessário nos arquivos de configuração do Angular ou do Spring Boot.
 
 ## Autor
 Diego Santana  
